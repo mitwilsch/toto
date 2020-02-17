@@ -7,6 +7,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import { ListItemSecondaryAction, Button } from '@material-ui/core';
+
 import utils from '../utils';
 
 /* const usernameForm = (
@@ -22,14 +25,16 @@ const NewTotoForm = props => {
 
   const [title, setTitle] = useState('');
   const handleSubmit = e => {
-    // e.preventDefault();
+    e.preventDefault();
     // this reloads the page, using this for now as state update is not re-rendering
     // e.stopPropagation();
     const item = { title };
     const newUser = user;
-    newUser.totos.push({ title });
+    const done = false;
+    newUser.totos.push({ title, done });
     utils.updateUser(newUser);
     setUser(newUser);
+    setTitle('');
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -69,16 +74,26 @@ const Toto = props => {
     setUser({ ...user, name: data.username });
     // if create user here, setUser needs time to finish otherwise updateUser sends old state
   }; */
+  const deleteToto = index => {
+    const { totos } = user;
+    const newUser = user;
+    newUser.totos.splice(index, 1);
+    console.log(newUser.totos);
+
+    utils.updateUser(newUser);
+    setUser(newUser);
+  };
 
   return (
     <React.Fragment>
       <List>
-        {user.totos.map(item => (
-          <ListItem button>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
+        {user.totos.map((item, index) => (
+          <ListItem key={item._id}>
+            <Checkbox />
             <ListItemText primary={item.title} />
+            <ListItemSecondaryAction>
+              <Button onClick={() => deleteToto(index)}>Delete</Button>
+            </ListItemSecondaryAction>
           </ListItem>
         ))}
       </List>

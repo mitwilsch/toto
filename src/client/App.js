@@ -13,7 +13,7 @@ const App = props => {
     utils.fetchUser(localStorage.getItem('id_token')).then(data => {
       setUser(data);
     });
-  }, []);
+  });
 
   return user == null ? (
     <div>
