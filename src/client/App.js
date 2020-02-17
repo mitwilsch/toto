@@ -18,7 +18,7 @@ const App = props => {
   return user == null ? (
     <div>
       <Header auth={authBool} login={login} logout={logout} />
-      <p>No user</p>
+      <p>No user!</p>
     </div>
   ) : (
     <div>

@@ -2,7 +2,6 @@ const User = require('./user-model');
 
 createUser = (req, res) => {
   const { body } = req;
-  console.log(req);
   if (!body) {
     return res.status(400).json({
       success: false,
@@ -50,14 +49,14 @@ updateUser = async (req, res) => {
         message: 'User not found!',
       });
     }
-    user = body;
+    user = new User(body);
 
     user
       .save()
       .then(() => {
         return res.status(200).json({
           success: true,
-          id: user._id,
+          data: user,
           message: 'User updated!',
         });
       })

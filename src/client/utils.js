@@ -23,13 +23,14 @@ const fetchUser = async token => {
 const updateUser = async user => {
   const api = `/api/user/${user._id}`;
   // this hasnt been tested yet
+
   const res = await fetch(api, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   });
   const data = await res.json();
-  console.log(data.data);
+  console.log(data);
 };
 
 export default { newUser, fetchUser, updateUser };

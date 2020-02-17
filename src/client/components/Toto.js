@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import utils from '../utils';
 
 const Toto = props => {
   const [user, setUser] = props.user;
-  console.log('user', user);
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = data => {
+    setUser({ ...user, name: data.username });
+  };
+  useEffect(() => {
+    utils.updateUser(user);
+  }, []);
+
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <p>{user.name}</p>
-    </div>
+      <input name="username" ref={register} />
+      <input type="submit" />
+    </form>
   );
 };
 
