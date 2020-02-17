@@ -30,7 +30,6 @@ const updateUser = async user => {
     body: JSON.stringify(user),
   });
   const data = await res.json();
-  console.log(data);
 };
 
 export default { newUser, fetchUser, updateUser };

@@ -42,30 +42,19 @@ updateUser = async (req, res) => {
     });
   }
 
-  User.findOne({ _id: req.params.id }, (err, user) => {
+  User.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, user) => {
     if (err) {
       return res.status(404).json({
         err,
         message: 'User not found!',
       });
     }
-    user = new User(body);
 
-    user
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          data: user,
-          message: 'User updated!',
-        });
-      })
-      .catch(error => {
-        return res.status(404).json({
-          error,
-          message: 'User not updated!',
-        });
-      });
+    return res.status(200).json({
+      success: true,
+      data: user,
+      message: 'User updated!',
+    });
   });
 };
 
@@ -94,7 +83,6 @@ getUserById = async (req, res) => {
 };
 
 getUsers = async (req, res) => {
-  console.log(req.body);
   await User.find(req.body, (err, users) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
