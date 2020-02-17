@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Fab from '@material-ui/core/Fab';
+import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import utils from '../utils';
 
 /* const usernameForm = (
@@ -12,11 +17,33 @@ import utils from '../utils';
   </form>
 ); */
 
-const NewTotoForm = () => {
-  return (
+const NewTotoForm = props => {
+  const [user, setUser] = props.user;
 
-  )
-}
+  const [title, setTitle] = useState('');
+  const handleSubmit = e => {
+    // e.preventDefault();
+    // this reloads the page, using this for now as state update is not re-rendering
+    // e.stopPropagation();
+    const item = { title };
+    const newUser = user;
+    newUser.totos.push({ title });
+    utils.updateUser(newUser);
+    setUser(newUser);
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextField
+        name="title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        id="standard-basic"
+        label={title}
+      />
+    </form>
+  );
+  // this is working with title only so far
+};
 
 const TotoFab = () => {
   const style = {
@@ -30,7 +57,7 @@ const TotoFab = () => {
 
   // needs onClick
   return (
-    <Fab onClick={} color="secondary" style={style}>
+    <Fab color="secondary" style={style}>
       <AddIcon />
     </Fab>
   );
@@ -38,12 +65,27 @@ const TotoFab = () => {
 
 const Toto = props => {
   const [user, setUser] = props.user;
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => {
+  /* const onSubmit = data => {
     setUser({ ...user, name: data.username });
     // if create user here, setUser needs time to finish otherwise updateUser sends old state
-  };
-  return <NewTotoForm />
+  }; */
+
+  return (
+    <React.Fragment>
+      <List>
+        {user.totos.map(item => (
+          <ListItem button>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.title} />
+          </ListItem>
+        ))}
+      </List>
+      <NewTotoForm user={[user, setUser]} />
+    </React.Fragment>
+  );
+  /* return <NewTotoForm user={[user, setUser]} />; */
 };
 
 export default Toto;
