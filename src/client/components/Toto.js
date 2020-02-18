@@ -43,6 +43,7 @@ const NewTotoForm = props => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
+        autoFocus
         name="title"
         value={title}
         onChange={e => setTitle(e.target.value)}
