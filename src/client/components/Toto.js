@@ -213,7 +213,7 @@ const Toto = props => {
             {user.totos.map((item, index) => (
               <ListItem key={item._id}>
                 <Checkbox
-                  value={item.checked}
+                  checked={item.checked}
                   onClick={() => handleCheckbox(index)}
                 />
                 <ListItemText
