@@ -24,7 +24,7 @@ const Header = props => {
   });
 
   // const handleChange = (event, index, value) => setState({ value });
-
+  const style = {};
   const onLeftIconButtonClick = () => {
     setState({ open: !state.open });
   };
@@ -69,7 +69,11 @@ const Header = props => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography color="inherit" className="headertypoclass">
+            <Typography
+              color="inherit"
+              className="headertypoclass"
+              style={{ flex: '1' }}
+            >
               Toto
             </Typography>
             {/* <Typography align="right">{user.name}</Typography> */}
