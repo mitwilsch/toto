@@ -27,17 +27,26 @@ const NewTotoForm = props => {
   const setOverlay = props.overlay;
 
   const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [checked, setChecked] = useState(false);
+
+  const [addBodyToggle, setAddBodyToggle] = useState(false);
+
   const handleSubmit = e => {
     e.preventDefault();
     // this reloads the page, using this for now as state update is not re-rendering
     // e.stopPropagation();
-    const item = { title };
+    const item = { title, body, checked };
     const newUser = user;
-    const done = false;
-    newUser.totos.push({ title, done });
+
+    newUser.totos.push(item);
     utils.updateUser(newUser);
     setUser(newUser);
     setOverlay(false);
+  };
+
+  const addBody = () => {
+    setAddBodyToggle(true);
   };
 
   return (
@@ -51,11 +60,31 @@ const NewTotoForm = props => {
         label={title}
       />
       <br />
-      <Button color="primary" startIcon={<SubjectIcon />}>
+      {addBodyToggle ? (
+        <div>
+          <TextField
+            autoFocus
+            name="body"
+            value={body}
+            onChange={e => setBody(e.target.value)}
+            id="standard-basic"
+            label={body}
+          />
+          <br />
+        </div>
+      ) : null}
+
+      {/* conditional render */}
+
+      <Button color="primary" startIcon={<SubjectIcon />} onClick={addBody}>
         Add Details
       </Button>
+
       <Button color="primary" startIcon={<CalendarTodayIcon />}>
         Add due date
+      </Button>
+      <Button color="primary" type="submit">
+        Save
       </Button>
     </form>
   );
@@ -95,7 +124,6 @@ const Toto = props => {
     const { totos } = user;
     const newUser = user;
     newUser.totos.splice(index, 1);
-    console.log(newUser.totos);
 
     utils.updateUser(newUser);
     setUser(newUser);
@@ -107,18 +135,22 @@ const Toto = props => {
 
   return (
     <React.Fragment>
-      <List>
-        {user.totos.map((item, index) => (
-          <ListItem key={item._id}>
-            <Checkbox />
-            <ListItemText primary={item.title} secondary="hello" />
+      {user.totos[0] == undefined ? (
+        <div>No todos!</div>
+      ) : (
+        <List>
+          {user.totos.map((item, index) => (
+            <ListItem key={item._id}>
+              <Checkbox />
+              <ListItemText primary={item.title} secondary={item.body} />
 
-            <ListItemSecondaryAction>
-              <Button onClick={() => deleteToto(index)}>Delete</Button>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
+              <ListItemSecondaryAction>
+                <Button onClick={() => deleteToto(index)}>Delete</Button>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      )}
 
       <TotoFab overlay={[overlay, setOverlay]} />
     </React.Fragment>
