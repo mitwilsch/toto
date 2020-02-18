@@ -19,6 +19,7 @@ export default class Auth {
   // parses the result after authentication from URL hash
   handleAuthentication = () => {
     this.auth0.parseHash((err, authResult) => {
+      console.log(authResult);
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         history.replace('/');
@@ -35,8 +36,8 @@ export default class Auth {
     const expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
+
+    localStorage.setItem('id_token', authResult.idTokenPayload.sub);
     localStorage.setItem('expires_at', expiresAt);
     // navigate to the home route
     history.replace('/');

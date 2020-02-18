@@ -6,7 +6,7 @@ const newUser = async token => {
     body: JSON.stringify({ token }),
   });
   const data = await res.json();
-  return data.data;
+  return data;
 };
 
 const fetchUser = async token => {
@@ -17,7 +17,7 @@ const fetchUser = async token => {
     body: JSON.stringify({ token }),
   });
   const data = await res.json();
-  return data.data[0];
+  return data;
 };
 
 const updateUser = async user => {

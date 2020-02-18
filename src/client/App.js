@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Toto from './components/Toto';
 import utils from './utils';
+import SplashPage from './components/SplashPage';
 
 const App = props => {
   const { isAuthenticated, login, logout } = props.auth;
@@ -11,14 +12,20 @@ const App = props => {
   // Update user state and call to API with todo changes
   useEffect(() => {
     utils.fetchUser(localStorage.getItem('id_token')).then(data => {
-      setUser(data);
+      if (!data.success) {
+        console.log('Creating new user');
+        utils.newUser(localStorage.getItem('id_token')).then(data => {
+          setUser(data.data);
+        });
+      }
+      setUser(data.data[0]);
     });
   });
 
   return user == null ? (
     <div>
       <Header auth={authBool} login={login} logout={logout} />
-      <p>No user!</p>
+      <SplashPage />
     </div>
   ) : (
     <div>

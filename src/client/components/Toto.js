@@ -145,7 +145,7 @@ const UserName = props => {
           Hello
           <form onSubmit={handleSubmit} style={{ display: 'inline' }}>
             <TextField
-              autofocus
+              autoFocus
               name="name"
               value={userName}
               onChange={e => setUserName(e.target.value)}
