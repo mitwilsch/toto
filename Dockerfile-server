@@ -6,10 +6,10 @@ COPY package*.json ./
 
 #RUN npm install
 # If you are building your code for production
-RUN npm i -D
+RUN npm i 
 
 COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "run", "devServer"]
+CMD ["npm", "run", "prodServer"]

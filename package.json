@@ -4,16 +4,15 @@
   "description": "toto: todo app",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "concurrently \"docker build -t mitwilsch/toto .\" \"webpack --mode production\"",
+    "build": "concurrently \"docker build -f ./Dockerfile-client -t mitwilsch/toto/client .\" \"docker build -f ./Dockerfile-server -t mitwilsch/toto/server .\"",
     "devClient": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "devServer": "nodemon src/server/index.js",
     "dev": "concurrently \"npm run devServer\" \"npm run devClient\"",
     "prodClient": "webpack-dev-server --mode production",
     "prodServer": "node src/server/index.js",
     "prod": "npm run build && concurrently \"npm run prodClient\" \"npm run prodServer\"",
-    "db": "",
-    "deploy": "",
-    "auth": ""
+    "db": "docker run mongodb",
+    "deploy": "docker-compose up"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.1",
@@ -28,7 +27,9 @@
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.9.5",
     "react-router-dom": "^5.1.2",
-    "socket.io": "^2.3.0"
+    "webpack-dev-server": "^3.10.0",
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
@@ -38,7 +39,6 @@
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.0",
     "clean-webpack-plugin": "^1.0.0",
-    "concurrently": "^4.1.2",
     "css-loader": "^2.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
@@ -50,12 +50,10 @@
     "eslint_d": "^8.0.0",
     "file-loader": "^3.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "nodemon": "^1.19.4",
     "prettier": "^1.19.1",
     "style-loader": "^0.23.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.41.3",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.0"
+    "webpack-cli": "^3.3.10"
   }
 }
