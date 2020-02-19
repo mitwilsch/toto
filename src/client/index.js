@@ -18,7 +18,6 @@ const handleAuthentication = (nextState, replace) => {
 const Routes = () => (
   <Router history={history} component={App}>
     <div>
-      <Route exact path="/" render={props => <App auth={auth} {...props} />} />
       <Route
         path="/callback"
         render={props => {
@@ -26,6 +25,7 @@ const Routes = () => (
           return <Callback {...props} />;
         }}
       />
+      <Route exact path="/" render={props => <App auth={auth} {...props} />} />
     </div>
   </Router>
 );

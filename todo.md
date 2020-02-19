@@ -6,4 +6,7 @@ Next: Make sure client, server, db can be separated to deploy
 - Client should build minimized
 - Server should run container. Express will host the site, rewrite api server to put paths behind /api
 - Mongodb can run in separate cloud instance
-  Next: write copy, splash page, intro
+- Client is making way too many re-renders. Need to separate fetches from render, or fix re-renders
+- Build/run scripts changed to docker-compose. Need to change edit workflow to update docker containers. Maybe volumes and restarts?
+
+Next: write copy, splash page, intro
