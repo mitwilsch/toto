@@ -10,6 +10,8 @@ RUN npm i
 
 COPY . .
 
+RUN npx webpack --mode production
+
 EXPOSE 8080
 
 CMD ["npm", "run", "prodServer"]
