@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose
-  .connect('mongodb://0.0.0.0:8000/toto', {
+  .connect('mongodb://mongodb:27017/toto', {
     // mongo cmd 'use db tictac' to init this
     useNewUrlParser: true,
     useUnifiedTopology: true,

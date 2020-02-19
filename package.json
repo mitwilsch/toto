@@ -7,11 +7,11 @@
     "build": "concurrently \"docker build -t mitwilsch/toto .\" \"webpack --mode production\"",
     "devClient": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "devServer": "nodemon src/server/index.js",
-    "dev": "npm run db && concurrently \"npm run devServer\" \"npm run devClient\"",
+    "dev": "concurrently \"npm run devServer\" \"npm run devClient\"",
     "prodClient": "webpack-dev-server --mode production",
     "prodServer": "node src/server/index.js",
     "prod": "npm run build && concurrently \"npm run prodClient\" \"npm run prodServer\"",
-    "db": "docker start mongodb",
+    "db": "",
     "deploy": "",
     "auth": ""
   },

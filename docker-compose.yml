@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  client:
+    image: mitwilsch/toto/client
+    ports:
+      - '3000:3000'
+    links:
+      - server
+  server:
+    image: mitwilsch/toto/server
+    links:
+      - mongodb
+  mongodb:
+    image: mongo
