@@ -4,14 +4,11 @@
   "description": "toto: todo app",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "concurrently \"webpack --mode production\" \"docker build -f ./Dockerfile-server -t mitwilsch/toto/server .\"" ,
+    "start": "docker-compose up",
+    "build": "docker build -t mitwilsch/toto .",
     "devClient": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "devServer": "nodemon src/server/index.js",
-    "dev": "npm run db && concurrently \"npm run devServer\" \"npm run devClient\"",
-    "prodClient": "webpack-dev-server --mode production",
-    "prodServer": "node src/server/index.js",
-    "prod": "npm run build && concurrently \"npm run prodClient\" \"npm run prodServer\"",
-    "db": "docker run mongodb"
+    "devServer": "nodemon --watch src/server/ src/server/index.js",
+    "dev": "concurrently \"npm run devServer\" \"npm run devClient\""
   },
   "dependencies": {
     "@material-ui/core": "^4.9.1",

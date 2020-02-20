@@ -8,9 +8,14 @@ const port = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Development routing
+app.use('/', userRouter);
+
+/* This serves static files from dist (bundled) while preserving the /callback for auth0 
 app.use('/api', userRouter);
 app.use('/', express.static('dist'));
 app.get('/callback', (req, res, next) => {
   res.sendFile('index.html', { root: './dist/' });
-});
+}); */
 app.listen(port, () => console.log('Listening on port', port));

@@ -1,13 +1,16 @@
 version: '3.7'
 services:
-  server:
-    image: mitwilsch/toto/server
+  app:
+    image: mitwilsch/toto
     build:
       context: ./
-      dockerfile: Dockerfile-server
+    expose:
+      - ${CLIENT_PORT}
     ports:
-      - '8080:8080'
+      - ${CLIENT_PORT}:${CLIENT_PORT}
     links:
       - mongodb
+    volumes:
+      - ./:/usr/src/app
   mongodb:
     image: mongo
