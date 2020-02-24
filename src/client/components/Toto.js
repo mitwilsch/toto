@@ -19,7 +19,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
-import utils from '../utils';
+import api from '../utils/api';
 
 /* const usernameForm = (
   <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +47,7 @@ const NewTotoForm = props => {
     const newUser = user;
 
     newUser.totos.push(item);
-    utils.updateUser(newUser);
+    api.updateUser(newUser);
     setUser(newUser);
     setOverlay(false);
   };
@@ -129,7 +129,7 @@ const UserName = props => {
     e.preventDefault();
     const newUser = user;
     newUser.name = userName;
-    utils.updateUser(newUser);
+    api.updateUser(newUser);
     setUser(newUser);
     setEditing(false);
   };
@@ -185,13 +185,13 @@ const Toto = props => {
     const newUser = user;
     newUser.totos.splice(index, 1);
 
-    utils.updateUser(newUser);
+    api.updateUser(newUser);
     setUser(newUser);
   };
   const handleCheckbox = index => {
     const newUser = user;
     newUser.totos[index].checked = !newUser.totos[index].checked;
-    utils.updateUser(newUser);
+    api.updateUser(newUser);
     setUser(newUser);
   };
   if (overlay) {
