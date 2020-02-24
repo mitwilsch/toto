@@ -4,7 +4,7 @@
   "description": "toto: todo app",
   "main": "src/server/index.js",
   "scripts": {
-    "start": "docker-compose up",
+    "start": "docker-compose up --build",
     "build": "docker build -t mitwilsch/toto .",
     "devClient": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "devServer": "nodemon --watch src/server/ src/server/index.js",

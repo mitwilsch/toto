@@ -20,7 +20,7 @@ const App = props => {
       }
       setUser(data.data[0]);
     });
-  });
+  }, []);
 
   return user == null ? (
     <div>
