@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import TotoForm from './TotoForm';
 
 const TotoFab = props => {
-  const [overlay, setOverlay] = useState(false);
+  const [formActive, setFormActive] = props.formCtrl;
   const style = {
     margin: 0,
     top: 'auto',
@@ -17,8 +17,12 @@ const TotoFab = props => {
   // needs onClick
   return (
     <React.Fragment>
-      {overlay ? props.children : null}
-      <Fab color="secondary" style={style} onClick={() => setOverlay(!overlay)}>
+      {formActive ? props.children : null}
+      <Fab
+        color="secondary"
+        style={style}
+        onClick={() => setFormActive(!formActive)}
+      >
         <AddIcon />
       </Fab>
     </React.Fragment>

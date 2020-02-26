@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { List } from '@material-ui/core';
 import TotoItem from './TotoItem';
-import api from '../../utils/api';
+import api from '../utils/api';
 
 const TotoList = props => {
   const [user, setUser] = props.user;

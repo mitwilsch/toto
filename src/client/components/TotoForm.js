@@ -4,27 +4,34 @@ import { TextField, Button } from '@material-ui/core';
 import SubjectIcon from '@material-ui/icons/Subject';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import SaveIcon from '@material-ui/icons/Save';
-import api from '../../utils/api';
+import api from '../utils/api';
+import { TotoFab } from './Toto';
 
 const TotoForm = props => {
   const [user, setUser] = props.user;
+  const { totos } = user;
+  const [formActive, setFormActive] = props.formCtrl;
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [checked, setChecked] = useState(false);
+  // do I need this?
 
   const [addBodyToggle, setAddBodyToggle] = useState(false);
+  // this could be done better
 
   const handleSubmit = e => {
     e.preventDefault();
     // this reloads the page, using this for now as state update is not re-rendering
     // e.stopPropagation();
     const item = { title, body, checked };
-    const newUser = user;
-
+    console.log(item);
+    /* const newUser = user;
     newUser.totos.push(item);
-    api.updateUser(newUser);
-    setUser(newUser);
+    api.updateUser(newUser); */
+    totos.push(item);
+    setUser({ ...user, totos });
+    setFormActive(false);
   };
 
   const addBody = () => {
