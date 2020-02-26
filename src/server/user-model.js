@@ -11,6 +11,7 @@ const User = new Schema(
         title: { type: String, required: false },
         body: { type: String, required: false },
         checked: { type: Boolean, require: false },
+        dueDate: { type: Date, require: false },
       },
     ],
   },

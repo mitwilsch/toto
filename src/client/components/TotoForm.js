@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import SubjectIcon from '@material-ui/icons/Subject';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import SaveIcon from '@material-ui/icons/Save';
+import MomentUtils from '@date-io/moment';
 import api from '../utils/api';
 import { TotoFab } from './Toto';
 
@@ -14,63 +16,74 @@ const TotoForm = props => {
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [checked, setChecked] = useState(false);
-  // do I need this?
+  const [dueDate, setDueDate] = useState(new Date());
 
-  const [addBodyToggle, setAddBodyToggle] = useState(false);
+  const [state, setState] = useState({ bodyActive: false, dateActive: false });
   // this could be done better
 
   const handleSubmit = e => {
     e.preventDefault();
-    // this reloads the page, using this for now as state update is not re-rendering
-    // e.stopPropagation();
-    const item = { title, body, checked };
-    console.log(item);
-    /* const newUser = user;
-    newUser.totos.push(item);
-    api.updateUser(newUser); */
+    const checked = false;
+    const item = { title, body, checked, dueDate };
     totos.push(item);
     setUser({ ...user, totos });
+    api.updateUser(user);
     setFormActive(false);
   };
 
-  const addBody = () => {
-    setAddBodyToggle(!addBodyToggle);
-  };
+  const TitleField = (
+    <TextField
+      autoFocus
+      name="title"
+      value={title}
+      onChange={e => setTitle(e.target.value)}
+      placeholder="Add title..."
+    />
+  );
+
+  const BodyField = (
+    <TextField
+      autoFocus
+      multiline
+      name="body"
+      value={body}
+      onChange={e => setBody(e.target.value)}
+      placeholder="Add details..."
+    />
+  );
+
+  const DateField = (
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <DatePicker
+        label="Date"
+        value={dueDate}
+        onChange={setDueDate}
+        animateYearScrolling
+      />
+    </MuiPickersUtilsProvider>
+  );
 
   return (
     <form onSubmit={handleSubmit}>
-      <TextField
-        autoFocus
-        name="title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        id="standard-basic"
-        placeholder="Add title..."
-      />
-      <br />
-      {addBodyToggle ? (
-        <div>
-          <TextField
-            autoFocus
-            multiline
-            name="body"
-            value={body}
-            onChange={e => setBody(e.target.value)}
-            id="standard-basic"
-            placeholder="Add details..."
-          />
-          <br />
-        </div>
-      ) : null}
+      {TitleField}
 
-      {/* conditional render */}
+      {state.bodyActive ? BodyField : null}
 
-      <Button color="primary" startIcon={<SubjectIcon />} onClick={addBody}>
+      {state.dateActive ? DateField : null}
+
+      <Button
+        color="primary"
+        startIcon={<SubjectIcon />}
+        onClick={() => setState({ ...state, bodyActive: true })}
+      >
         Add Details
       </Button>
 
-      <Button color="primary" startIcon={<CalendarTodayIcon />}>
+      <Button
+        color="primary"
+        startIcon={<CalendarTodayIcon />}
+        onClick={() => setState({ ...state, dateActive: true })}
+      >
         Add due date
       </Button>
       <Button color="primary" type="submit">

@@ -15,7 +15,13 @@ const TotoItem = props => {
       <Checkbox checked={item.checked} onClick={() => handleCheckbox(index)} />
       <ListItemText
         primary={item.title}
-        secondary={item.body}
+        secondary={
+          <React.Fragment>
+            {console.log(new Date(item.dueDate))}
+            {item.dueDate ? item.dueDate.toString() : null}
+            {item.body}
+          </React.Fragment>
+        }
         style={item.checked ? { textDecoration: 'line-through' } : {}}
       />
 
