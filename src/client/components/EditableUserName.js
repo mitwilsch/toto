@@ -14,7 +14,7 @@ const EditableUserName = props => {
     const newUser = user;
     newUser.name = userName;
     api.updateUser(newUser);
-    setUser(newUser);
+    setUser({ ...user, name: userName });
     setEditing(false);
   };
 
@@ -25,6 +25,9 @@ const EditableUserName = props => {
   if (editing) {
     return (
       <div>
+        <button onClick={() => setUser({ ...user, name: 'World' })}>
+          World
+        </button>
         <Typography variant="h3">
           Hello
           <form onSubmit={handleSubmit} style={{ display: 'inline' }}>

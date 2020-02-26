@@ -10,6 +10,7 @@ const App = props => {
   const [totoList, setTotoList] = useState(null);
   const authBool = isAuthenticated();
   // Update user state and call to API with todo changes
+
   useEffect(() => {
     api.fetchUser(localStorage.getItem('id_token')).then(data => {
       if (!data.success) {
@@ -20,7 +21,7 @@ const App = props => {
       }
       setUser(data.data[0]);
     });
-  });
+  }, []);
 
   return user == null ? (
     <div>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { List, TextField, Button, Typography } from '@material-ui/core';
 
-import TotoFab from './TotoFab';
-import api from '../utils/api';
+import api from '../../utils/api';
 import TotoForm from './TotoForm';
 import TotoItem from './TotoItem';
-import EditableUserName from './EditableUserName';
+import TotoFab from './TotoFab';
+import EditableUserName from '../EditableUserName';
 import TotoList from './TotoList';
 
 /*
@@ -17,8 +17,13 @@ totoItems are nested in TotoList
 const Toto = props => {
   const [user, setUser] = props.user;
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <React.Fragment>
+      <button onClick={() => setUser({ ...user, name: 'Hello' })}>Hello</button>
       <EditableUserName user={[user, setUser]} />
       <TotoFab>
         <TotoForm user={[user, setUser]} />

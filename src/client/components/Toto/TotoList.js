@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { List } from '@material-ui/core';
 import TotoItem from './TotoItem';
-import api from '../utils/api';
+import api from '../../utils/api';
 
 const TotoList = props => {
   const [user, setUser] = props.user;
+  const { totos } = user;
 
   const handleDelete = index => {
-    const newUser = user;
-    newUser.totos.splice(index, 1);
-    api.updateUser(newUser);
-    setUser(newUser);
+    totos.splice(index, 1);
+    setUser({ ...user, totos });
+    api.updateUser(user);
   };
 
   const handleCheckbox = index => {
-    const newUser = user;
-    newUser.totos[index].checked = !newUser.totos[index].checked;
-    api.updateUser(newUser);
-    setUser(newUser);
+    totos[index].checked = !totos[index].checked;
+    setUser({ ...user, totos });
+    api.updateUser(user);
   };
 
   return (

@@ -4,7 +4,7 @@ import { TextField, Button } from '@material-ui/core';
 import SubjectIcon from '@material-ui/icons/Subject';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import SaveIcon from '@material-ui/icons/Save';
-import api from '../utils/api';
+import api from '../../utils/api';
 
 const TotoForm = props => {
   const [user, setUser] = props.user;
