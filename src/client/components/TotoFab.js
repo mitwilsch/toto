@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import TotoForm from './TotoForm';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const TotoFab = props => {
   const [formActive, setFormActive] = props.formCtrl;
@@ -15,6 +15,7 @@ const TotoFab = props => {
   };
 
   // needs onClick
+
   return (
     <React.Fragment>
       {formActive ? props.children : null}
@@ -23,9 +24,10 @@ const TotoFab = props => {
         style={style}
         onClick={() => setFormActive(!formActive)}
       >
-        <AddIcon />
+        {formActive ? <CancelIcon /> : <AddIcon />}
       </Fab>
     </React.Fragment>
   );
 };
+
 export default TotoFab;
