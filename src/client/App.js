@@ -52,10 +52,18 @@ const App = props => {
       <CssBaseline />
       <Container component="main" className={classes.main} maxWidth="sm">
         <Typography variant="h3">My Tasks</Typography>
-        <TaskItem item={taskList[0]} />
+        {taskList.map(item => {
+          if (!item.checked) {
+            return <TaskItem item={item} />;
+          }
+        })}
 
         <Typography variant="h4">Completed (1)</Typography>
-        <TaskItem item={taskList[1]} />
+        {taskList.map(item => {
+          if (item.checked) {
+            return <TaskItem item={item} />;
+          }
+        })}
       </Container>
 
       <footer className={classes.footer}>
@@ -72,23 +80,12 @@ const App = props => {
 const TaskItem = props => {
   const { item } = props;
 
-  const handleCheck = () => {};
   return (
     <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
       <Checkbox style={{ flex: 0 }} checked={item.checked} />
       <div style={{ flex: 1 }}>
-        <Typography
-          style={item.checked ? { textDecoration: 'line-through' } : {}}
-          variant="body1"
-        >
-          {item.title}
-        </Typography>
-        <Typography
-          style={item.checked ? { textDecoration: 'line-through' } : {}}
-          variant="body2"
-        >
-          {item.body}
-        </Typography>
+        <Typography variant="body1">{item.title}</Typography>
+        <Typography variant="body2">{item.body}</Typography>
       </div>
     </Paper>
   );
