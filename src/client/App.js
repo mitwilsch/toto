@@ -13,8 +13,6 @@ import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import api from './utils/api';
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -33,34 +31,31 @@ const useStyles = makeStyles(theme => ({
 
 const App = props => {
   const classes = useStyles();
+
+  const [taskList, setTaskList] = useState([
+    {
+      id: '1',
+      title: 'Title of task',
+      body: 'Body of task',
+      checked: false,
+    },
+    {
+      id: '2',
+      title: 'Completed task title',
+      body: 'Completed task body',
+      checked: true,
+    },
+  ]);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Container component="main" className={classes.main} maxWidth="sm">
         <Typography variant="h3">My Tasks</Typography>
-
-        <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
-          <Checkbox style={{ flex: 0 }} checked={false} />
-          <div style={{ flex: 1 }}>
-            <Typography variant="body1">Title of task</Typography>
-            <Typography variant="body2">Body of task</Typography>
-          </div>
-        </Paper>
+        <TaskItem item={taskList[0]} />
 
         <Typography variant="h4">Completed (1)</Typography>
-
-        <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
-          <Checkbox style={{ flex: 0 }} checked />
-          <div style={{ flex: 1 }}>
-            <Typography
-              style={{ textDecoration: 'line-through' }}
-              variant="body1"
-            >
-              Completed task title
-            </Typography>
-            <Typography variant="body2">Completed task body</Typography>
-          </div>
-        </Paper>
+        <TaskItem item={taskList[1]} />
       </Container>
 
       <footer className={classes.footer}>
@@ -71,6 +66,31 @@ const App = props => {
         </BottomNavigation>
       </footer>
     </div>
+  );
+};
+
+const TaskItem = props => {
+  const { item } = props;
+
+  const handleCheck = () => {};
+  return (
+    <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
+      <Checkbox style={{ flex: 0 }} checked={item.checked} />
+      <div style={{ flex: 1 }}>
+        <Typography
+          style={item.checked ? { textDecoration: 'line-through' } : {}}
+          variant="body1"
+        >
+          {item.title}
+        </Typography>
+        <Typography
+          style={item.checked ? { textDecoration: 'line-through' } : {}}
+          variant="body2"
+        >
+          {item.body}
+        </Typography>
+      </div>
+    </Paper>
   );
 };
 export default App;
