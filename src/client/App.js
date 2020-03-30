@@ -94,3 +94,40 @@ const TaskItem = props => {
   );
 };
 export default App;
+
+/* Todo
+Checkbox button controls item state
+New entry on Add click
+Render slider window on Menu click
+Render popup on More click
+Move tasks from My Tasks to Completed based on checked status
+Full-page item view
+Add date field to item structure
+Add date picker to entry
+Add subtask to model
+Item action moves to subtask of another item
+Hide completed menu behind clicker
+More task lists
+Menu actions create task list
+Item action moves to another task list
+*/
+
+/* Routes
+Menu:
+Create new list
+Choose list
+Profile
+Add item:
+title
+body 
+date
+More: 
+Sorty by (date, user)
+Rename list
+Delete list
+Delete all completed
+Theme picker
+Items:
+Move sorts order, assigns to subtask
+Swipe deletes
+*/
