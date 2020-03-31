@@ -47,21 +47,60 @@ const App = props => {
     },
   ]);
 
+  const handleCheck = index => {
+    const taskListTemp = taskList;
+    taskListTemp[index].checked = !taskListTemp[index].checked;
+    setTaskList(taskListTemp);
+  };
+
+  const TaskItem = props => {
+    const { item, handler } = props;
+    const [checked, setChecked] = useState(item.checked);
+    return (
+      <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
+        <Checkbox
+          style={{ flex: 0 }}
+          checked={item.checked}
+          onChange={() => {
+            handler();
+            setChecked(!checked);
+          }}
+        />
+        <div style={{ flex: 1 }}>
+          <Typography variant="body1">{item.title}</Typography>
+          <Typography variant="body2">{item.body}</Typography>
+        </div>
+      </Paper>
+    );
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Container component="main" className={classes.main} maxWidth="sm">
         <Typography variant="h3">My Tasks</Typography>
-        {taskList.map(item => {
+        {taskList.map((item, index) => {
           if (!item.checked) {
-            return <TaskItem item={item} />;
+            return (
+              <TaskItem
+                item={item}
+                handler={() => handleCheck(index)}
+                key={item.id}
+              />
+            );
           }
         })}
 
         <Typography variant="h4">Completed (1)</Typography>
-        {taskList.map(item => {
+        {taskList.map((item, index) => {
           if (item.checked) {
-            return <TaskItem item={item} />;
+            return (
+              <TaskItem
+                item={item}
+                handler={() => handleCheck(index)}
+                key={item.id}
+              />
+            );
           }
         })}
       </Container>
@@ -77,27 +116,14 @@ const App = props => {
   );
 };
 
-const TaskItem = props => {
-  const { item } = props;
-
-  return (
-    <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
-      <Checkbox style={{ flex: 0 }} checked={item.checked} />
-      <div style={{ flex: 1 }}>
-        <Typography variant="body1">{item.title}</Typography>
-        <Typography variant="body2">{item.body}</Typography>
-      </div>
-    </Paper>
-  );
-};
 export default App;
 
 /* Todo
-Checkbox button controls item state
+x Checkbox button controls item state
 New entry on Add click
 Render slider window on Menu click
 Render popup on More click
-Move tasks from My Tasks to Completed based on checked status
+x Move tasks from My Tasks to Completed based on checked status
 Full-page item view
 Add date field to item structure
 Add date picker to entry
