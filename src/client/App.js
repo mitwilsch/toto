@@ -8,6 +8,8 @@ import {
   BottomNavigationAction,
   makeStyles,
   Container,
+  IconButton,
+  Collapse,
 } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -19,6 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,17 +63,23 @@ const App = props => {
     },
   ]);
 
+  const [state, setState] = useState({ completedActive: false });
+
   const handleCheck = index => {
     const taskListTemp = taskList;
     taskListTemp[index].checked = !taskListTemp[index].checked;
     setTaskList(taskListTemp);
   };
 
+  const toggleCompleted = () => {
+    setState({ completedActive: !state.completedActive });
+  };
+
   const TaskItem = props => {
     const { item, handler } = props;
     const [checked, setChecked] = useState(item.checked);
     return (
-      <Paper style={{ display: 'flex', width: '40%' }} variant="outlined">
+      <ListItem>
         <Checkbox
           style={{ flex: 0 }}
           checked={item.checked}
@@ -79,11 +88,8 @@ const App = props => {
             setChecked(!checked);
           }}
         />
-        <div style={{ flex: 1 }}>
-          <Typography variant="body1">{item.title}</Typography>
-          <Typography variant="body2">{item.body}</Typography>
-        </div>
-      </Paper>
+        <ListItemText primary={item.title} secondary={item.body} />
+      </ListItem>
     );
   };
 
@@ -122,31 +128,43 @@ const App = props => {
     <div className={classes.root}>
       <CssBaseline />
       <Container component="main" className={classes.main} maxWidth="sm">
-        <Typography variant="h3">My Tasks</Typography>
-        {taskList.map((item, index) => {
-          if (!item.checked) {
-            return (
-              <TaskItem
-                item={item}
-                handler={() => handleCheck(index)}
-                key={item.id}
-              />
-            );
-          }
-        })}
+        <List>
+          <ListItem>
+            <Typography variant="h3">My Tasks</Typography>
+          </ListItem>
+          {taskList.map((item, index) => {
+            if (!item.checked) {
+              return (
+                <TaskItem
+                  item={item}
+                  handler={() => handleCheck(index)}
+                  key={item.id}
+                />
+              );
+            }
+          })}
 
-        <Typography variant="h4">Completed (1)</Typography>
-        {taskList.map((item, index) => {
-          if (item.checked) {
-            return (
-              <TaskItem
-                item={item}
-                handler={() => handleCheck(index)}
-                key={item.id}
-              />
-            );
-          }
-        })}
+          <ListItem button onClick={() => toggleCompleted()}>
+            <Typography variant="h4">
+              Completed <ArrowDropDownIcon />
+            </Typography>
+          </ListItem>
+          <Collapse in={state.completedActive} timeout="auto" unmountOnExit>
+            <List>
+              {taskList.map((item, index) => {
+                if (item.checked) {
+                  return (
+                    <TaskItem
+                      item={item}
+                      handler={() => handleCheck(index)}
+                      key={item.id}
+                    />
+                  );
+                }
+              })}
+            </List>
+          </Collapse>
+        </List>
       </Container>
 
       <footer className={classes.footer}>
@@ -166,7 +184,8 @@ export default App;
 /* Todo
 x Checkbox button controls item state
 New entry on Add click
-Render slider window on Menu click
+x Render slider window on Menu click
+Populate App Drawer
 Render popup on More click
 x Move tasks from My Tasks to Completed based on checked status
 Full-page item view
@@ -174,7 +193,7 @@ Add date field to item structure
 Add date picker to entry
 Add subtask to model
 Item action moves to subtask of another item
-Hide completed menu behind clicker
+x Hide completed menu behind clicker
 More task lists
 Menu actions create task list
 Item action moves to another task list
