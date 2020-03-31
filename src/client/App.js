@@ -9,6 +9,13 @@ import {
   makeStyles,
   Container,
 } from '@material-ui/core';
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -26,6 +33,12 @@ const useStyles = makeStyles(theme => ({
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
+  },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
   },
 }));
 
@@ -74,6 +87,37 @@ const App = props => {
     );
   };
 
+  const AppDrawer = () => {
+    const [isActive, setIsActive] = useState(false);
+
+    const toggleDrawer = () => {
+      setIsActive(!isActive);
+    };
+
+    const list = () => (
+      <div className={classes.fullList} onClick={() => toggleDrawer()}>
+        <List>
+          <ListItem button>
+            <ListItemText primary="Hello World" />
+          </ListItem>
+        </List>
+      </div>
+    );
+
+    return (
+      <React.Fragment>
+        <BottomNavigationAction
+          label="Menu"
+          icon={<MenuIcon />}
+          onClick={() => toggleDrawer()}
+        />
+        <Drawer anchor="bottom" open={isActive} onClose={() => toggleDrawer()}>
+          {list()}
+        </Drawer>
+      </React.Fragment>
+    );
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -107,7 +151,8 @@ const App = props => {
 
       <footer className={classes.footer}>
         <BottomNavigation showLabels>
-          <BottomNavigationAction label="Menu" icon={<MenuIcon />} />
+          <AppDrawer />
+
           <BottomNavigationAction label="Add" icon={<AddIcon />} />
           <BottomNavigationAction label="More" icon={<MoreVertIcon />} />
         </BottomNavigation>
