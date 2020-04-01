@@ -10,18 +10,22 @@ import {
   Container,
   IconButton,
   Collapse,
+  Drawer,
+  Button,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
 } from '@material-ui/core';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import SubjectIcon from '@material-ui/icons/Subject';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -124,6 +128,75 @@ const App = props => {
     );
   };
 
+  const AddTaskModal = () => {
+    const [state, setState] = useState({ active: false, showBody: false });
+    const [item, setItem] = useState({
+      title: '',
+      body: '',
+    });
+    const toggleDrawer = () => {
+      setState({ ...state, active: !state.active });
+    };
+
+    const handleSubmit = e => {
+      e.preventDefault();
+      const newItem = item;
+      newItem.checked = false;
+      const id = parseInt(taskList.slice(-1)[0].id) + 1;
+      newItem.id = id.toString();
+      setTaskList([...taskList, newItem]);
+    };
+
+    return (
+      <React.Fragment>
+        <BottomNavigationAction
+          label="Add"
+          icon={<AddIcon />}
+          onClick={() => toggleDrawer()}
+        />
+        <Drawer
+          anchor="bottom"
+          open={state.active}
+          onClose={() => toggleDrawer()}
+        >
+          <div style={{ paddingTop: '20px', paddingLeft: '10px' }}>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                autoFocus
+                name="title"
+                value={item.title}
+                onChange={e => setItem({ ...item, title: e.target.value })}
+                placeholder="New task"
+              />
+              {state.showBody ? (
+                <TextField
+                  autoFocus
+                  multiline
+                  name="body"
+                  onChange={e => setItem({ ...item, body: e.target.value })}
+                  placeholder="Add details"
+                />
+              ) : null}
+              <Button
+                color="primary"
+                startIcon={<SubjectIcon />}
+                onClick={() => setState({ ...state, showBody: true })}
+              >
+                Add details
+              </Button>
+              <Button color="primary" startIcon={<CalendarTodayIcon />}>
+                Add date
+              </Button>
+              <Button color="primary" type="submit">
+                <SaveIcon />
+              </Button>
+            </form>
+          </div>
+        </Drawer>
+      </React.Fragment>
+    );
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -170,8 +243,7 @@ const App = props => {
       <footer className={classes.footer}>
         <BottomNavigation showLabels>
           <AppDrawer />
-
-          <BottomNavigationAction label="Add" icon={<AddIcon />} />
+          <AddTaskModal />
           <BottomNavigationAction label="More" icon={<MoreVertIcon />} />
         </BottomNavigation>
       </footer>
