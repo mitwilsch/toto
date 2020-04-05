@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import {
-  CssBaseline,
   Typography,
-  BottomNavigation,
-  BottomNavigationAction,
   makeStyles,
   Container,
   Collapse,
   List,
   ListItem,
 } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import TaskItem from './TaskItem';
-import AppDrawer from './AppDrawer';
-import AddTaskModal from './AddTaskModal';
 
 const useStyles = makeStyles(theme => ({
   root: {

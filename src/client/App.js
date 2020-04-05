@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import {
   CssBaseline,
-  Typography,
   BottomNavigation,
   BottomNavigationAction,
   makeStyles,
-  Container,
-  Collapse,
-  List,
-  ListItem,
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import TaskItem from './components/TaskItem';
 import AppDrawer from './components/AppDrawer';
 import AddTaskModal from './components/AddTaskModal';
 import TaskListModal from './components/TaskListModal';
