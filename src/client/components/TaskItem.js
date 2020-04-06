@@ -14,6 +14,7 @@ const TaskItem = props => {
           const tempTaskList = h.tasks;
           tempTaskList[index].checked = !tempTaskList[index].checked;
           h.setTasks(tempTaskList);
+          h.update(tempTaskList);
           setChecked(!checked);
         }}
       />

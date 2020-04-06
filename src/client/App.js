@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CssBaseline,
   BottomNavigation,
@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 import { AppDrawer, AddTaskModal, TaskListModal } from './components';
+import { update, read } from './utils/api.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,23 +31,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const testTaskList = [
+  {
+    id: '1',
+    title: 'Title of task',
+    body: 'Body of task',
+    checked: false,
+  },
+  {
+    id: '2',
+    title: 'Completed task title',
+    body: 'Completed task body',
+    checked: true,
+  },
+];
+
 const App = props => {
   const classes = useStyles();
-  const [taskList, setTaskList] = useState([
-    {
-      id: '1',
-      title: 'Title of task',
-      body: 'Body of task',
-      checked: false,
-    },
-    {
-      id: '2',
-      title: 'Completed task title',
-      body: 'Completed task body',
-      checked: true,
-    },
-  ]);
+  const [taskList, setTaskList] = useState(testTaskList);
   const [state, setState] = useState({ completedActive: false });
+
+  useEffect(() => {
+    const list = read();
+    // compare lists here before setting, and we can run on each render
+    setTaskList(list);
+  }, []);
 
   const toggleCompleted = () => {
     setState({ completedActive: !state.completedActive });
@@ -55,6 +64,8 @@ const App = props => {
   const tasksHandler = {
     tasks: taskList,
     setTasks: setTaskList,
+    update,
+    read,
   };
 
   return (

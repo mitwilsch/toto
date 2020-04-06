@@ -1,1 +1,1 @@
-# toto: Todo app
+# toto: Google Tasks inspired experiment

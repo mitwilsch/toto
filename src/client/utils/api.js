@@ -1,35 +1,12 @@
-const newUser = async token => {
-  const api = '/api/user';
-  const res = await fetch(api, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token }),
-  });
-  const data = await res.json();
-  return data;
+// write to local storage
+import React from 'react';
+
+const update = list => {
+  localStorage.setItem('list', JSON.stringify(list));
 };
 
-const fetchUser = async token => {
-  const api = '/api/users';
-  const res = await fetch(api, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token }),
-  });
-  const data = await res.json();
-  return data;
+const read = () => {
+  const list = localStorage.getItem('list');
+  return JSON.parse(list);
 };
-
-const updateUser = async user => {
-  const api = `/api/user/${user._id}`;
-  // this hasnt been tested yet
-
-  const res = await fetch(api, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
-  });
-  const data = await res.json();
-};
-
-export default { newUser, fetchUser, updateUser };
+export { update, read };

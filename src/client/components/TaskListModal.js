@@ -45,19 +45,45 @@ const TaskListModal = props => {
     setState({ completedActive: !state.completedActive });
   };
 
+  const Tasks = (list, display) => {
+    const mainList = [];
+
+    if (display == 'Main') {
+      for (let i = 0; i < list.length; i++) {
+        if (!list[i].checked) {
+          mainList.push(list[i]);
+        }
+      }
+    }
+
+    if (display == 'Completed') {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].checked) {
+          mainList.push(list[i]);
+        }
+      }
+    }
+
+    return (
+      <React.Fragment>
+        {mainList.map((item, index) => {
+          return (
+            <TaskItem item={item} index={index} key={item.id} handler={h} />
+          );
+        })}
+      </React.Fragment>
+    );
+  };
+
+  const CompletedTasks = () => {};
+
   return (
     <Container component="main" className={classes.main} maxWidth="sm">
       <List>
         <ListItem>
           <Typography variant="h3">My Tasks</Typography>
         </ListItem>
-        {h.tasks.map((item, index) => {
-          if (!item.checked) {
-            return (
-              <TaskItem item={item} index={index} key={item.id} handler={h} />
-            );
-          }
-        })}
+        {Tasks(h.tasks, 'Main')}
 
         <ListItem button onClick={() => toggleCompleted()}>
           <Typography variant="h4">
@@ -65,20 +91,7 @@ const TaskListModal = props => {
           </Typography>
         </ListItem>
         <Collapse in={state.completedActive} timeout="auto" unmountOnExit>
-          <List>
-            {h.tasks.map((item, index) => {
-              if (item.checked) {
-                return (
-                  <TaskItem
-                    item={item}
-                    index={index}
-                    key={item.id}
-                    handler={h}
-                  />
-                );
-              }
-            })}
-          </List>
+          <List>{Tasks(h.tasks, 'Completed')}</List>
         </Collapse>
       </List>
     </Container>
