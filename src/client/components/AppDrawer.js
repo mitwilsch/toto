@@ -7,7 +7,7 @@ import {
   Drawer,
   makeStyles,
 } from '@material-ui/core/';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Menu } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,7 +54,7 @@ const AppDrawer = () => {
     <React.Fragment>
       <BottomNavigationAction
         label="Menu"
-        icon={<MenuIcon />}
+        icon={<Menu />}
         onClick={() => toggleDrawer()}
       />
       <Drawer anchor="bottom" open={isActive} onClose={() => toggleDrawer()}>

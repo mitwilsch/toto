@@ -5,10 +5,8 @@ import {
   BottomNavigationAction,
   makeStyles,
 } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AppDrawer from './components/AppDrawer';
-import AddTaskModal from './components/AddTaskModal';
-import TaskListModal from './components/TaskListModal';
+import { MoreVert } from '@material-ui/icons';
+import { AppDrawer, AddTaskModal, TaskListModal } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,7 +66,7 @@ const App = props => {
           <AppDrawer />
 
           <AddTaskModal handler={tasksHandler} />
-          <BottomNavigationAction label="More" icon={<MoreVertIcon />} />
+          <BottomNavigationAction label="More" icon={<MoreVert />} />
         </BottomNavigation>
       </footer>
     </div>

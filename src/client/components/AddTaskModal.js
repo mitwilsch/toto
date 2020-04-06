@@ -6,9 +6,7 @@ import {
   Button,
   TextField,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import SubjectIcon from '@material-ui/icons/Subject';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { Add, Subject, CalendarToday } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +59,7 @@ const AddTaskModal = props => {
     <React.Fragment>
       <BottomNavigationAction
         label="Add"
-        icon={<AddIcon />}
+        icon={<Add />}
         onClick={() => toggleDrawer()}
       />
       <Drawer
@@ -98,10 +96,10 @@ const AddTaskModal = props => {
             <br />
             <Button
               color="primary"
-              startIcon={<SubjectIcon />}
+              startIcon={<Subject />}
               onClick={() => setState({ ...state, showBody: true })}
             />
-            <Button color="primary" startIcon={<CalendarTodayIcon />} />
+            <Button color="primary" startIcon={<CalendarToday />} />
 
             <Button color="primary" type="submit">
               Save

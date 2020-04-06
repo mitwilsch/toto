@@ -7,8 +7,8 @@ import {
   List,
   ListItem,
 } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import TaskItem from './TaskItem';
+import { ArrowDropDown } from '@material-ui/icons';
+import { TaskItem } from '.';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +61,7 @@ const TaskListModal = props => {
 
         <ListItem button onClick={() => toggleCompleted()}>
           <Typography variant="h4">
-            Completed <ArrowDropDownIcon />
+            Completed <ArrowDropDown />
           </Typography>
         </ListItem>
         <Collapse in={state.completedActive} timeout="auto" unmountOnExit>
