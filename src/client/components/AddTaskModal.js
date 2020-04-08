@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+import DateFnsUtils from '@date-io/date-fns';
 import {
   BottomNavigationAction,
   makeStyles,
@@ -7,6 +9,8 @@ import {
   TextField,
 } from '@material-ui/core';
 import { Add, Subject, CalendarToday } from '@material-ui/icons';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import { TaskDatePicker } from '.';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,27 +36,33 @@ const useStyles = makeStyles(theme => ({
 
 const AddTaskModal = props => {
   const classes = useStyles();
-  const [state, setState] = useState({ active: false, showBody: false });
-  const [item, setItem] = useState({
-    title: '',
-    body: '',
+  const [state, setState] = useState({
+    active: false,
+    showBody: false,
+    showDate: false,
   });
+  const [date, setDate] = useState(new Date());
+  const [item, setItem] = useState(taskModel);
 
   const h = props.handler;
 
   const toggleDrawer = () => {
-    setState({ ...state, active: !state.active });
+    setState({ ...state, active: false });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     const newItem = item;
-    newItem.checked = false;
+    // id
     const id = parseInt(h.tasks.slice(-1)[0].id) + 1;
     newItem.id = id.toString();
+    // Date
+    newItem.dueDate = date;
+    // Submit
     h.setTasks([...h.tasks, newItem]);
-    toggleDrawer();
-    setItem({ title: '', body: '' });
+    // Reset
+    setState({ ...state, active: false, showDate: false });
+    setItem(taskModel);
   };
 
   return (
@@ -84,6 +94,7 @@ const AddTaskModal = props => {
               placeholder="New task"
             />
             <br />
+            {/* Show body conditional */}
             {state.showBody ? (
               <TextField
                 autoFocus
@@ -94,13 +105,21 @@ const AddTaskModal = props => {
               />
             ) : null}
             <br />
+            {/* Add body button */}
             <Button
               color="primary"
               startIcon={<Subject />}
               onClick={() => setState({ ...state, showBody: true })}
             />
-            <Button color="primary" startIcon={<CalendarToday />} />
+            {/* Date button */}
+            <Button
+              color="primary"
+              startIcon={<CalendarToday />}
+              onClick={() => setState({ ...state, showDate: true })}
+            />
+            {state.showDate ? <TaskDatePicker state={[date, setDate]} /> : null}
 
+            {/* Save button */}
             <Button color="primary" type="submit">
               Save
             </Button>
