@@ -36,14 +36,11 @@ const App = props => {
   // dummy var, need this to re-render app on button clicks
   const [clicked, setClicked] = useState(0);
 
-  const fetchTasks = () => {
-    const list = read();
-    setTaskList(list);
-  };
-
-  const list = read();
   useEffect(() => {
-    console.log('running effect');
+    const fetchTasks = () => {
+      const list = read();
+      setTaskList(list);
+    };
     fetchTasks();
   }, [clicked]);
 
@@ -91,7 +88,9 @@ const App = props => {
 };
 
 export default App;
-
+/* render components all here
+Pass state vars as props to everything here
+*/
 /* Todo
 Populate App Drawer
 Render popup on More click
