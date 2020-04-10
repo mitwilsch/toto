@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-
 import { Checkbox, ListItem, ListItemText } from '@material-ui/core/';
+import { handleCheckbox } from '../utils/handlers';
 
 const TaskItem = props => {
   const { item, index, handler } = props;
-  console.log(item);
-  const [checked, setChecked] = useState(item.checked);
+
   return (
     <ListItem>
       <Checkbox
-        checked={checked}
+        checked={item.checked}
         onClick={() => {
-          const tempTaskList = handler.tasks;
-          tempTaskList[index].checked = !tempTaskList[index].checked;
-          handler.setTasks(tempTaskList);
-          handler.update(tempTaskList);
-          setChecked(!checked);
+          handleCheckbox(index);
+          // setChecked(!checked);
         }}
       />
 

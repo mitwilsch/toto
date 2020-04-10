@@ -6,13 +6,18 @@ const update = list => {
 };
 
 const read = () => {
-  if (localStorage.getItem('list') == null) {
-    const list = [];
-    update(list);
-  }
   const list = localStorage.getItem('list');
+
   return JSON.parse(list);
 };
 
-const add = item => {};
+const deleteTask = () => {
+  const tempTaskList = handler.tasks;
+  tempTaskList.splice(index, 1);
+  handler.setTasks(tempTaskList);
+  handler.update(tempTaskList);
+};
+
+const addTask = item => {};
+
 export { update, read };

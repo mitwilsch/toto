@@ -10,22 +10,6 @@ import {
 import { Menu } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-  },
-  main: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2),
-  },
-  footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: 'auto',
-  },
-  list: {
-    width: 250,
-  },
   fullList: {
     width: 'auto',
   },

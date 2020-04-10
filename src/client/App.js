@@ -27,28 +27,25 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
   },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
 }));
 
 const App = props => {
   const classes = useStyles();
   const [taskList, setTaskList] = useState([]);
-  const [state, setState] = useState({ completedActive: false });
 
-  useEffect(() => {
+  // dummy var, need this to re-render app on button clicks
+  const [clicked, setClicked] = useState(0);
+
+  const fetchTasks = () => {
     const list = read();
-    // compare lists here before setting, and we can run on each render
     setTaskList(list);
-  }, []);
-
-  const toggleCompleted = () => {
-    setState({ completedActive: !state.completedActive });
   };
+
+  const list = read();
+  useEffect(() => {
+    console.log('running effect');
+    fetchTasks();
+  }, [clicked]);
 
   const tasksHandler = {
     tasks: taskList,
@@ -60,7 +57,12 @@ const App = props => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Container component="main" className={classes.main} maxWidth="sm">
+      <Container
+        component="main"
+        className={classes.main}
+        maxWidth="sm"
+        onClick={() => setClicked(clicked + 1)}
+      >
         <List>
           <ListItem>
             <Typography variant="h3">My Tasks</Typography>

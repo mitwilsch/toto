@@ -13,30 +13,7 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { TaskDatePicker } from '.';
 import taskModel from '../models/task.js';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-  },
-  main: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2),
-  },
-  footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: 'auto',
-  },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-}));
-
 const AddTaskModal = props => {
-  const classes = useStyles();
   const defaultState = { active: false, showBody: false, showDate: false };
   const [state, setState] = useState(defaultState);
   const [date, setDate] = useState(new Date());
