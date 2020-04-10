@@ -5,7 +5,7 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 
 import DateFnsUtils from '@date-io/date-fns';
 
-const TotoDatePicker = props => {
+const TaskDatePicker = props => {
   const [date, setDate] = props.state;
 
   console.log(date);
@@ -23,4 +23,4 @@ const TotoDatePicker = props => {
     </MuiPickersUtilsProvider>
   );
 };
-export default TotoDatePicker;
+export default TaskDatePicker;

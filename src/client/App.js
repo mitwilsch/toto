@@ -4,9 +4,13 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   makeStyles,
+  Typography,
+  Container,
+  List,
+  ListItem,
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
-import { AppDrawer, AddTaskModal, TaskListModal } from './components';
+import { AppDrawer, AddTaskModal, TaskItem } from './components';
 import { update, read } from './utils/api.js';
 
 const useStyles = makeStyles(theme => ({
@@ -31,24 +35,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const testTaskList = [
-  {
-    id: '1',
-    title: 'Title of task',
-    body: 'Body of task',
-    checked: false,
-  },
-  {
-    id: '2',
-    title: 'Completed task title',
-    body: 'Completed task body',
-    checked: true,
-  },
-];
-
 const App = props => {
   const classes = useStyles();
-  const [taskList, setTaskList] = useState(testTaskList);
+  const [taskList, setTaskList] = useState([]);
   const [state, setState] = useState({ completedActive: false });
 
   useEffect(() => {
@@ -71,7 +60,22 @@ const App = props => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TaskListModal tasks={taskList} handler={tasksHandler} />
+      <Container component="main" className={classes.main} maxWidth="sm">
+        <List>
+          <ListItem>
+            <Typography variant="h3">My Tasks</Typography>
+          </ListItem>
+
+          {taskList.map((item, index) => (
+            <TaskItem
+              item={item}
+              index={index}
+              key={item.id}
+              handler={tasksHandler}
+            />
+          ))}
+        </List>
+      </Container>
       <footer className={classes.footer}>
         <BottomNavigation showLabels>
           <AppDrawer />
@@ -87,39 +91,13 @@ const App = props => {
 export default App;
 
 /* Todo
-x Checkbox button controls item state
-x New entry on Add click
-x Render slider window on Menu click
 Populate App Drawer
 Render popup on More click
-x Move tasks from My Tasks to Completed based on checked status
 Full-page item view
-Add date field to item structure
-Add date picker to entry
 Add subtask to model
 Item action moves to subtask of another item
 x Hide completed menu behind clicker
 More task lists
 Menu actions create task list
 Item action moves to another task list
-*/
-
-/* Routes
-Menu:
-  Create new list
-  Choose list
-  Profile
-Add item:
-  x title
-  x body 
-  date
-More: 
-  Sorty by (date, user)
-  Rename list
-  Delete list
-  Delete all completed
-  Theme picker
-Items:
-  Move sorts order, assigns to subtask
-  Swipe deletes
 */

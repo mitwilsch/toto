@@ -11,6 +11,7 @@ import {
 import { Add, Subject, CalendarToday } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { TaskDatePicker } from '.';
+import taskModel from '../models/task.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,32 +37,36 @@ const useStyles = makeStyles(theme => ({
 
 const AddTaskModal = props => {
   const classes = useStyles();
-  const [state, setState] = useState({
-    active: false,
-    showBody: false,
-    showDate: false,
-  });
+  const defaultState = { active: false, showBody: false, showDate: false };
+  const [state, setState] = useState(defaultState);
   const [date, setDate] = useState(new Date());
   const [item, setItem] = useState(taskModel);
-
+  const [lastItemId, setLastItemId] = useState(0);
   const h = props.handler;
 
   const toggleDrawer = () => {
-    setState({ ...state, active: false });
+    setState({ ...state, active: !state.active });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     const newItem = item;
     // id
-    const id = parseInt(h.tasks.slice(-1)[0].id) + 1;
+    if (h.tasks.length == 0) {
+      setLastItemId(0);
+    } else {
+      setLastItemId(h.tasks.slice(-1)[0].id);
+    }
+
+    const id = parseInt(lastItemId) + 1;
     newItem.id = id.toString();
     // Date
     newItem.dueDate = date;
     // Submit
     h.setTasks([...h.tasks, newItem]);
+    h.update([...h.tasks, newItem]);
     // Reset
-    setState({ ...state, active: false, showDate: false });
+    setState(defaultState);
     setItem(taskModel);
   };
 
