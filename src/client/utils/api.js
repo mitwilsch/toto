@@ -20,4 +20,11 @@ const deleteTask = () => {
 
 const addTask = item => {};
 
-export { update, read };
+const fetchTasks = () => {
+  if (localStorage.list) {
+    const { list } = localStorage;
+    return JSON.parse(list);
+  }
+};
+
+export { update, read, fetchTasks };

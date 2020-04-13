@@ -10,8 +10,8 @@ import {
   ListItem,
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
-import { AppDrawer, AddTaskModal, TaskItem } from './components';
-import { update, read } from './utils/api.js';
+import { TaskList, AppDrawer, AddTaskModal, TaskItem } from './components';
+import { update, read, fetchTasks } from './utils/api';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,14 +34,12 @@ const App = props => {
   const [taskList, setTaskList] = useState([]);
 
   // dummy var, need this to re-render app on button clicks
-  const [clicked, setClicked] = useState(0);
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    const fetchTasks = () => {
-      const list = read();
-      setTaskList(list);
-    };
-    fetchTasks();
+    const list = fetchTasks();
+    console.log(list);
+    setTaskList(list);
   }, [clicked]);
 
   const tasksHandler = {
@@ -58,21 +56,14 @@ const App = props => {
         component="main"
         className={classes.main}
         maxWidth="sm"
-        onClick={() => setClicked(clicked + 1)}
+        onClick={() => setClicked(!clicked)}
       >
         <List>
           <ListItem>
             <Typography variant="h3">My Tasks</Typography>
           </ListItem>
 
-          {taskList.map((item, index) => (
-            <TaskItem
-              item={item}
-              index={index}
-              key={item.id}
-              handler={tasksHandler}
-            />
-          ))}
+          <TaskList tasks={taskList} />
         </List>
       </Container>
       <footer className={classes.footer}>
