@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import {
+  BottomNavigation,
+  BottomNavigationAction,
   List,
   ListItem,
   ListItemText,
-  BottomNavigationAction,
   Drawer,
   makeStyles,
-} from '@material-ui/core/';
-import { Menu } from '@material-ui/icons';
+} from '@material-ui/core';
+import { MoreVert, Menu } from '@material-ui/icons';
+import { AddTaskModal } from '.';
 
 const useStyles = makeStyles(theme => ({
   fullList: {
     width: 'auto',
   },
 }));
+// dumping AppDrawer and TaskModel to refactor later
+/* 
+I want to have ActionBar be a self-contained component
+App drawers need lists, and styling. 
+Updates need to be run by handlers or API
 
+
+*/
 const AppDrawer = () => {
   const classes = useStyles();
 
@@ -47,4 +56,17 @@ const AppDrawer = () => {
     </React.Fragment>
   );
 };
-export default AppDrawer;
+
+const ActionBar = props => {
+  const tasksHandler = props.handler;
+  return (
+    <BottomNavigation showLabels>
+      <AppDrawer />
+
+      <AddTaskModal handler={tasksHandler} />
+      <BottomNavigationAction label="More" icon={<MoreVert />} />
+    </BottomNavigation>
+  );
+};
+
+export default ActionBar;

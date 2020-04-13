@@ -10,7 +10,13 @@ import {
   ListItem,
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
-import { TaskList, AppDrawer, AddTaskModal, TaskItem } from './components';
+import {
+  TaskList,
+  ActionBar,
+  AppDrawer,
+  AddTaskModal,
+  TaskItem,
+} from './components';
 import { update, read, fetchTasks } from './utils/api';
 
 const useStyles = makeStyles(theme => ({
@@ -67,12 +73,7 @@ const App = props => {
         </List>
       </Container>
       <footer className={classes.footer}>
-        <BottomNavigation showLabels>
-          <AppDrawer />
-
-          <AddTaskModal handler={tasksHandler} />
-          <BottomNavigationAction label="More" icon={<MoreVert />} />
-        </BottomNavigation>
+        <ActionBar handler={tasksHandler} />
       </footer>
     </div>
   );
