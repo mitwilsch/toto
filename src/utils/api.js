@@ -7,6 +7,13 @@ const update = list => {
 
 const read = () => {
   const list = localStorage.getItem('list');
+  console.log('list', list);
+  if (list === undefined) {
+    return [];
+  }
+  if (list === null) {
+    return [];
+  }
 
   return JSON.parse(list);
 };
@@ -21,10 +28,9 @@ const deleteTask = () => {
 const addTask = item => {};
 
 const fetchTasks = () => {
-  if (localStorage.list) {
-    const { list } = localStorage;
-    return JSON.parse(list);
-  }
+  const list = read();
+
+  return list;
 };
 
 export { update, read, fetchTasks };

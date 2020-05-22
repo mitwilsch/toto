@@ -4,10 +4,15 @@
   "description": "toto: todo app",
   "main": "src/server/index.js",
   "scripts": {
+    "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "build": "webpack --mode production"
+    "serve": "npx http-server dist -p 80",
+    "dockerBuild": "docker build -t mitwilsch/toto:latest ."
   },
   "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "devDependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
@@ -15,9 +20,7 @@
     "date-fns": "^2.11.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "typeface-roboto": "0.0.75"
-  },
-  "devDependencies": {
+    "typeface-roboto": "0.0.75",
     "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.6",
